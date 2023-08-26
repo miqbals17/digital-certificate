@@ -21,12 +21,12 @@ export default function Table() {
       {/* <h1 className="font-bold">Sertifikat Tanah Digital</h1> */}
       <div className="w-11/12 mt-5">
         <div className="flex justify-between">
-          <p className="text-sm">
+          <p className="text-sm sm:text-lg">
             Daftar sertifikat tanah digital yang telah terdata dalam Blockchain
           </p>
           <button className="flex items-center space-x-2 bg-gray-800 hover:bg-gray-900 text-white font-bold py-1 px-2 rounded">
-            <DocumentPlusIcon className="w-3 h-3" />
-            <span className="text-xs">Tambah</span>
+            <DocumentPlusIcon className="w-3 h-3 sm:w-5 sm:h-5" />
+            <span className="text-xs sm:text-base">Tambah</span>
           </button>
         </div>
         <table className="mt-5 w-full table-fixed">
@@ -41,11 +41,11 @@ export default function Table() {
             {dataMember.map((data) => {
               return (
                 <tr className="border-b border-slate-300" key={data.key}>
-                  <td className="p-2">{data.state}</td>
-                  <td className="p-2">{data.city}</td>
+                  <td className="p-2">{data.type}</td>
+                  <td className="p-2">{data.status}</td>
                   <td className="p-2 text-right">
                     <Link
-                      href="#"
+                      href="/detail"
                       className="text-gray-800 hover:text-gray-500 font-bold"
                     >
                       Lihat Detail
