@@ -7,7 +7,7 @@ export default function Table() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetch("http://localhost:3000/api/hello");
+      const data = await fetch("/api/hello");
       const dataJson = await data.json();
 
       setDataMember(dataJson);
