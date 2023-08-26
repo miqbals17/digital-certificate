@@ -10,32 +10,39 @@ export default function ConnectWallet() {
 
   const connectWallet = async () => {
     try {
-      const address = await getProviderOrSigner(true);
+      await getProviderOrSigner(true);
       // const address = await signer.getAddress();
-
-      setAddressWallet(address);
-      setWalletConnected(true);
     } catch (err) {
       console.error(err);
     }
   };
 
   const getProviderOrSigner = async (getSigner = false) => {
-    if (window.ethereum) {
-      console.log("Metamask detected");
+    try {
+      if (window.ethereum) {
+        console.log("Metamask detected");
 
-      try {
-        const accounts = await window.ethereum.request({
-          method: "eth_requestAccounts",
-        });
-        console.log(accounts);
+        try {
+          const accounts = await window.ethereum.request({
+            method: "eth_requestAccounts",
+          });
+          console.log(accounts);
 
-        return accounts[0];
-      } catch (err) {
-        console.error(err);
+          setAddressWallet(accounts[0]);
+          setWalletConnected(true);
+
+          return accounts[0];
+        } catch (err) {
+          window.alert(err);
+          console.error(err);
+        }
+      } else {
+        console.log("Metamask not detected");
+        throw new Error("Metamask not deteced");
       }
-    } else {
-      console.log("Metamask not detected");
+    } catch (err) {
+      window.alert(err);
+      console.error(err);
     }
 
     // const provider = new ethers.providers.Web3Provider(window.ethereum);
