@@ -1,4 +1,4 @@
-import { providers } from "ethers";
+import { ethers, providers } from "ethers";
 import { useEffect, useRef, useState } from "react";
 import Web3Modal from "web3modal";
 import { WalletIcon } from "@heroicons/react/24/outline";
@@ -10,8 +10,8 @@ export default function ConnectWallet() {
 
   const connectWallet = async () => {
     try {
-      const signer = await getProviderOrSigner(true);
-      const address = await signer.getAddress();
+      const address = await getProviderOrSigner(true);
+      // const address = await signer.getAddress();
 
       setAddressWallet(address);
       setWalletConnected(true);
@@ -21,21 +21,41 @@ export default function ConnectWallet() {
   };
 
   const getProviderOrSigner = async (getSigner = false) => {
-    const provider = await web3ModalRef.current.connect();
-    const web3Provider = new providers.Web3Provider(provider);
+    if (window.ethereum) {
+      console.log("Metamask detected");
 
-    const { chainId } = await web3Provider.getNetwork();
+      try {
+        const accounts = await window.ethereum.request({
+          method: "eth_requestAccounts",
+        });
+        console.log(accounts);
 
-    if (chainId !== 11155111) {
-      throw new Error("Pindah Jaringan ke Sepolia");
+        return accounts[0];
+      } catch (err) {
+        console.error(err);
+      }
+    } else {
+      console.log("Metamask not detected");
     }
 
-    if (getSigner) {
-      const signer = web3Provider.getSigner();
-      return signer;
-    }
+    // const provider = new ethers.providers.Web3Provider(window.ethereum);
+    // await provider.send("eth_requestAccounts", []);
 
-    return web3Provider;
+    // console.log(await provider.getNetwork());
+
+    // const { chainId } = await provider.getNetwork();
+
+    // if (chainId !== 11155111) {
+    //   window.alert("Pindah jaingan ke Sepolia!");
+    //   throw new Error("Pindah Jaringan ke Sepolia");
+    // }
+
+    // if (getSigner) {
+    //   const signer = provider.getSigner();
+    //   return signer;
+    // }
+
+    // return provider;
   };
 
   useEffect(() => {
