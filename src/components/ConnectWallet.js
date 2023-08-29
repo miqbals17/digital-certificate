@@ -1,12 +1,10 @@
 import { ethers, providers } from "ethers";
 import { useEffect, useRef, useState } from "react";
-import Web3Modal from "web3modal";
 import { WalletIcon } from "@heroicons/react/24/outline";
 
 export default function ConnectWallet() {
   const [walletConnected, setWalletConnected] = useState(false);
   const [addressWallet, setAddressWallet] = useState(null);
-  const web3ModalRef = useRef();
 
   const connectWallet = async () => {
     try {
@@ -64,16 +62,6 @@ export default function ConnectWallet() {
 
     // return provider;
   };
-
-  useEffect(() => {
-    if (!walletConnected) {
-      web3ModalRef.current = new Web3Modal({
-        network: "sepolia",
-        providerOptions: {},
-        disableInjectedProvider: false,
-      });
-    }
-  });
 
   if (!walletConnected)
     return (

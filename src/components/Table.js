@@ -45,7 +45,7 @@ export default function Table() {
                   <td className="p-2">{data.status}</td>
                   <td className="p-2 text-right">
                     <Link
-                      href="/detail"
+                      href={"/detail/" + data.key}
                       className="text-gray-800 hover:text-gray-500 font-bold"
                     >
                       Lihat Detail
